@@ -1,47 +1,179 @@
-### Project Overview
-This is an AI counseling web application for 12th-grade students to select universities. It uses React for the frontend, Node.js for the backend, and Groq Cloud SDK for AI features.
+### System Overview
 
-### Features
-1. **Onboarding:** Students input skills, knowledge, interests, and passions.
-2. **Job Interest:** Suggests top future jobs based on trends.
-3. **Eligibility Checker:** Checks eligibility using 12th marks, SAT, and JEE.
-4. **Course/University Selector:** Recommends courses and universities.
-5. **Roadmap/Resources:** Provides learning timelines and free/paid resources.
-6. **AI Voice Agent:** Offers real-time voice assistance.
+- This web app helps 12th-grade students select suitable universities, courses, and career paths using AI-powered recommendations.
 
-### Tech Stack
-- **Frontend:** React.js, HTML, CSS
-- **Backend:** Node.js, Express.js
-- **AI:** Groq Cloud SDK
-- **Database:** MongoDB
-- **Deployment:** Vercel/Heroku
+**Frontend (React):** User interface with forms, dashboards, and voice features.
 
-### Architecture Overview
-- **Client-Side (React):** Handles UI with forms, dashboards, and voice input, making API calls to the backend.
-- **Server-Side (Node.js):** Manages RESTful APIs, processes data, and integrates with Grok SDK.
-- **Database (MongoDB):** Stores student profiles, universities, and resources.
-- **External Service (Groq SDK):** Provides AI-driven insights and voice processing.
+**Backend (Node.js + Express):** REST APIs, data validation, and AI integration.
 
-### Database Models and Relationships in MongoDB
+**Database (MongoDB):** Stores profiles, universities, and resources.
 
-- **Student Model**
-  - Fields: `_id`, `name`, `skills` (array), `knowledge` (array), `interests` (array), `passions` (array), `marks` (number), `exams` (object: {sat: number, jee: number}), `jobPreferences` (array)
-  - Relationships: None (standalone collection).
+**AI (Groq SDK):** Provides job, course, and roadmap recommendations, plus voice agent support.
 
-- **University Model**
-  - Fields: `_id`, `name`, `courses` (array), `eligibilityCriteria` (object: {marks: number, sat: number, jee: number}), `location`
-  - Relationships: None (standalone), but linked via `RecommendationEngine` logic.
+### Frontend Components & Responsibilities
 
-- **Resource Model**
-  - Fields: `_id`, `course`, `type` (string: "paid" or "free"), `link` (string), `description`
-  - Relationships: Linked to `University.courses` via `course` field.
+**OnboardingForm**
 
-- **Relationships:**
-  - Student data is used by `RecommendationEngine` to query `University` collection.
-  - `Resource` documents are fetched based on `University.courses` selected.
+- Collects student data: name, skills, knowledge, interests, passions.
 
-### Performance Overview
-- **Latency:** API responses should be under 2 seconds, optimized by caching frequent queries (e.g., university data) in Node.js.
-- **Scalability:** MongoDB handles up to 1,000 concurrent users; scale with sharding if needed.
-- **Load:** Frontend optimized with lazy loading; backend uses load balancing on Heroku.
-- **Reliability:** 99.9% uptime with Vercel deployment; error handling for API failures.
+- Submits profile to backend for storage.
+
+**JobInterest**
+
+- Displays AI-recommended future jobs.
+
+- Fetches results from backend.
+
+**EligibilityChecker**
+
+- Takes marks, SAT, and JEE scores.
+
+- Calls backend to fetch eligible universities.
+
+**CourseSelector**
+
+- Shows recommended courses/universities tailored to the student.
+
+**Roadmap**
+
+- Displays a study timeline and resources (free/paid).
+
+**VoiceAgent**
+
+- Provides real-time voice assistance.
+
+- Uses speech-to-text (STT) and Groq’s conversational AI.
+
+### Frontend → Backend Data Flows
+
+*Onboarding Flow*
+
+**Input:** { name, skills, knowledge, interests, passions }
+
+**Backend API:** /api/student/onboarding
+
+**Output:** { status: success, studentId, message }
+
+*Job Recommendation Flow*
+
+**Input:** studentId
+
+**Backend API:** /api/recommend/jobs/:studentId
+
+**Output:** { jobs: [ "AI Research Scientist", "Robotics Engineer" ] }
+
+*Eligibility Check Flow*
+
+**Input:** { marks, exams: { sat, jee } }
+
+**Backend API:** /api/recommend/eligibility
+
+**Output:** { eligibleUniversities: [ { name, course } ] }
+
+*Course Recommendation Flow*
+
+**Input:** { studentId }
+
+**Backend API:** /api/recommend/university
+
+**Output:** { courses: [ { name, university } ] }
+
+*Roadmap & Resources Flow*
+
+**Input:** { studentId, course }
+
+**Backend API:** /api/recommend/roadmap
+
+**Output:** { timeline: [ … ], resources: [ { course, type, link, description } ] }
+
+*Voice Agent Flow*
+
+**Input:** Real-time speech query from user.
+
+**Backend API:** /api/voice/query → Groq SDK.
+
+**Output:** AI-generated voice/text response.
+
+### Backend API Design
+
+**Endpoints**
+
+- `POST /api/student/onboarding` → Save student profile.
+
+- `GET /api/recommend/jobs/:studentId` → Return AI job suggestions.
+
+- `POST /api/recommend/eligibility` → Return universities based on marks/exams.
+
+- `POST /api/recommend/university` → Recommend universities + courses.
+
+- `POST /api/recommend/roadmap` → Generate learning roadmap + resources.
+
+- `POST /api/voice/query` → Handle AI voice Q&A.
+
+### Database Models (MongoDB)
+
+*Student*
+
+- Fields: `_id`, `name`, `skills[]`, `knowledge[]`, `interests[]`, `passions[]`, `marks`, `exams {sat, jee}`, j`obPreferences[]`.
+
+*University*
+
+- Fields: `_id`, `name`, `courses[]`, `eligibilityCriteria {marks, sat, jee}`, `location`.
+
+*Resource*
+
+- Fields: `_id`, `course`, `type (free/paid)`, `link`, `description`.
+
+### AI Integration (Groq SDK)
+
+*Inputs to LLM:*
+
+- Student profile (skills, interests, passions).
+
+- Marks and exam scores (for eligibility).
+
+- Selected course/university (for roadmap).
+
+- Real-time user queries (for voice agent).
+
+*Outputs from LLM:*
+
+- Top jobs aligned with student’s background.
+
+- Refined eligibility suggestions.
+
+- Personalized learning roadmap.
+
+- Conversational answers for voice queries.
+
+### Data Flow Examples
+
+*Eligibility Check Example*
+
+- **Frontend:** Student enters marks + exams.
+
+- **Backend:** Validates → queries University collection.
+
+- **Groq SDK:** Optionally refines suggestions.
+
+- **Frontend:** Displays eligible universities list.
+
+### Roadmap Example
+
+- **Frontend:** Student selects course.
+
+- **Backend:** Fetches resources for that course.
+
+- **Groq SDK:** Generates study timeline.
+
+- **Frontend:** Displays roadmap & resources.
+
+#### Performance & Reliability
+
+- **Response Latency:** Under 2s (caching frequently queried universities).
+
+- **Scalability:** MongoDB supports >1,000 concurrent users; shard when needed.
+
+- **Load Handling:** Lazy-loading UI, backend load balancing.
+
+- **Reliability:** 99.9% uptime with Vercel/Heroku; error fallback for API/AI failures.
