@@ -5,10 +5,10 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const path = require('path');
-const fs = require('fs'); // Add this import
-const fsPromises = require('fs').promises; // Add this import
-const pdfParse = require('pdf-parse'); // Add this import
-const mongoose = require('mongoose'); // Add this import
+const fs = require('fs');
+const fsPromises = require('fs').promises;
+const pdfParse = require('pdf-parse');
+const mongoose = require('mongoose');
 const connectDB = require('./lib/database');
 
 // Load environment variables
@@ -20,9 +20,8 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY
 });
 
-// Import models and middleware
-const Report = require('./models/Report'); // Adjust path as needed
-const { authenticateToken } = require('./middleware/auth'); // Adjust path as needed
+const Report = require('./models/Report');
+const { authenticateToken } = require('./middleware/auth');
 
 const app = express();
 
@@ -66,7 +65,6 @@ const reportRoutes = require('./routes/reportRoutes');
 app.use('/auth', authRoutes);
 app.use('/', reportRoutes);
 
-// Enhanced Chat Route with better PDF handling
 app.post('/chat', authenticateToken, async (req, res) => {
   try {
     const { reportId, message } = req.body;
@@ -79,7 +77,6 @@ app.post('/chat', authenticateToken, async (req, res) => {
       });
     }
 
-    // Find the report in database
     const report = await Report.findOne({
       _id: reportId,
       userId: req.user._id
@@ -92,7 +89,7 @@ app.post('/chat', authenticateToken, async (req, res) => {
       });
     }
 
-    // Check if report is completed
+   
     if (report.status !== 'completed') {
       return res.status(400).json({ 
         success: false,
@@ -103,7 +100,6 @@ app.post('/chat', authenticateToken, async (req, res) => {
     // Build PDF file path
     const pdfPath = path.join(__dirname, report.pdfUrl);
     
-    // Check if PDF file exists
     if (!fs.existsSync(pdfPath)) {
       return res.status(404).json({ 
         success: false,
@@ -121,7 +117,7 @@ app.post('/chat', authenticateToken, async (req, res) => {
       const options = {
         normalizeWhitespace: false,
         disableCombineTextItems: false,
-        max: 0, // Extract all pages
+        max: 0,
         version: 'v1.10.100'
       };
       
@@ -188,7 +184,7 @@ Instructions:
       { role: 'user', content: message }
     ];
 
-    // Get AI response
+    
     const completion = await groq.chat.completions.create({
       messages,
       model: 'llama-3.3-70b-versatile',

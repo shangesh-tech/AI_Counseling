@@ -1,6 +1,6 @@
 const User = require('../models/User');
 
-// Sign Up
+
 const signup = async (req, res) => {
   try {
     const { name, email, password, age, phone } = req.body;
