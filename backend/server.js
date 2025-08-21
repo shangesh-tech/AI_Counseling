@@ -30,7 +30,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: ["http://localhost:5173", "https://ai-counseling-iota.vercel.app"],
   credentials: true
 }));
 
@@ -281,8 +281,6 @@ const startServer = async () => {
     
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📚 API Documentation: http://localhost:${PORT}/api/docs`);
-      console.log(`🏥 Health Check: http://localhost:${PORT}/health`);
       console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {
