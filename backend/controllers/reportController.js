@@ -448,8 +448,13 @@ const deleteReport = async (req, res) => {
 
     // Delete PDF file
     const pdfPath = path.join(__dirname, '..', report.pdfUrl);
-    if (fs.existsSync(pdfPath)) {
-      await fs.unlink(pdfPath);
+    
+    // Check if file exists asynchronously and delete it
+    try {
+      await fs.promises.access(pdfPath, fs.constants.F_OK);
+      await fs.promises.unlink(pdfPath);
+    } catch (err) {
+      console.error('File does not exist or cannot be accessed:', err);
     }
 
     // Delete from database
