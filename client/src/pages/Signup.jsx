@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -6,28 +7,41 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const exists = users.find((user) => user.email === formData.email);
+    try {
+      const res = await fetch("http://localhost:5000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (exists) {
-      alert("User already exists. Please log in!");
-      return;
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Registration failed");
+      }
+
+      // Save token and user data
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect to dashboard
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message);
     }
-
-    users.push(formData);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Signup successful! 🎉 You can now log in.");
-    setFormData({ name: "", email: "", password: "" });
-    window.location.href = "/login";
   };
 
   return (
@@ -36,9 +50,18 @@ const Signup = () => {
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Create an Account
         </h2>
+
+        {error && (
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700 text-center">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Full Name</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Full Name
+            </label>
             <input
               type="text"
               name="name"
@@ -50,7 +73,9 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Email</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -62,7 +87,9 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Password</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -73,6 +100,7 @@ const Signup = () => {
               required
             />
           </div>
+
           <button
             type="submit"
             className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:opacity-90 transition duration-300 transform hover:scale-[1.02]"
@@ -80,9 +108,13 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
+
         <p className="text-sm text-gray-600 mt-6 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-indigo-600 font-medium hover:underline">
+          <a
+            href="/login"
+            className="text-indigo-600 font-medium hover:underline"
+          >
             Log in
           </a>
         </p>

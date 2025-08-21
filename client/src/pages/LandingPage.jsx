@@ -88,10 +88,10 @@ const LandingPage = () => {
               </button>
               {/* Get Started Button */}
               <button
-                onClick={() => navigate('/onboarding')}
+                onClick={() => navigate('/login')}
                 className="flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-medium rounded-lg transition-colors"
               >
-                Get Started
+                Login
                 <ArrowRight className="w-4 h-4 ml-2" />
               </button>
             </motion.div>
