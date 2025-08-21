@@ -45,63 +45,76 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-50 px-4">
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-indigo-100">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Create an Account
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+
+        {error && (
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700 text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-gray-700 mb-1">Full Name</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Full Name
+            </label>
             <input
               type="text"
               name="name"
               placeholder="Enter your name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:ring focus:ring-indigo-200"
+              className="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200"
               required
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-1">Email</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:ring focus:ring-indigo-200"
+              className="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200"
               required
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-1">Password</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Password
+            </label>
             <input
               type="password"
               name="password"
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:ring focus:ring-indigo-200"
+              className="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200"
               required
             />
           </div>
 
-          {error && (
-            <div className="text-red-600 text-sm text-center">{error}</div>
-          )}
-
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition duration-300"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:opacity-90 transition duration-300 transform hover:scale-[1.02]"
           >
             Sign Up
           </button>
         </form>
-        <p className="text-sm text-gray-600 mt-4 text-center">
+
+        <p className="text-sm text-gray-600 mt-6 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-indigo-600 hover:underline">
+          <a
+            href="/login"
+            className="text-indigo-600 font-medium hover:underline"
+          >
             Log in
           </a>
         </p>

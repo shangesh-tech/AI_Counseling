@@ -9,9 +9,7 @@ import {
   Target,
   CheckCircle,
   Sparkles,
-  GraduationCap,
-  MapPin,
-  Award,
+  GraduationCap
 } from "lucide-react";
 import axios from "axios";
 
@@ -225,7 +223,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
                   }
                   placeholder="Enter your full name"
-                  className="w-full h-12 px-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                  className="w-full h-14 px-5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
                 />
               </div>
               <div>
@@ -245,7 +243,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                   placeholder="Your age"
                   min="12"
                   max="25"
-                  className="w-full h-12 px-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                  className="w-full h-14 px-5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
                 />
               </div>
             </div>
@@ -264,7 +262,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                   setFormData((prev) => ({ ...prev, grade: e.target.value }))
                 }
                 placeholder="e.g., 12th Grade, 1st Year College"
-                className="w-full h-12 px-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                className="w-full h-14 px-5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
               />
             </div>
           </div>
@@ -288,7 +286,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                   setFormData((prev) => ({ ...prev, school: e.target.value }))
                 }
                 placeholder="Enter your institution name"
-                className="w-full h-12 px-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                className="w-full h-14 px-5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
               />
             </div>
             <div>
@@ -306,7 +304,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                   setFormData((prev) => ({ ...prev, location: e.target.value }))
                 }
                 placeholder="City, State"
-                className="w-full h-12 px-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                className="w-full h-14 px-5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
               />
             </div>
             <div>
@@ -324,7 +322,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                   setFormData((prev) => ({ ...prev, marks: e.target.value }))
                 }
                 placeholder="e.g., 85% in 12th, 8.5 CGPA"
-                className="w-full h-12 px-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                className="w-full h-14 px-5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
               />
             </div>
             <div>
@@ -375,7 +373,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="button"
-                    className={`p-3 text-center rounded-xl text-sm font-medium border-2 transition-all ${
+                    className={`p-4 text-center rounded-xl text-base font-medium border-2 transition-all ${
                       formData.skills.includes(skill)
                         ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-indigo-500 shadow-lg"
                         : "hover:bg-indigo-50 hover:border-indigo-300 text-gray-700 border-gray-200 bg-white hover:shadow-md"
@@ -402,7 +400,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="button"
-                    className={`p-4 text-left rounded-xl text-sm font-medium border-2 transition-all ${
+                    className={`p-5 text-left rounded-xl text-base font-medium border-2 transition-all ${
                       formData.interests.includes(interest)
                         ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white border-purple-500 shadow-lg"
                         : "hover:bg-purple-50 hover:border-purple-300 text-gray-700 border-gray-200 bg-white hover:shadow-md"
@@ -430,7 +428,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                 }
                 placeholder="What drives you? What are you passionate about?"
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition-all bg-gray-50 focus:bg-white"
+                className="w-full px-5 py-4 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition-all bg-gray-50 focus:bg-white"
               />
             </div>
           </div>
@@ -454,7 +452,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                 }
                 placeholder="Describe your career aspirations, dream job, or what you want to achieve in your professional life..."
                 rows={5}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition-all bg-gray-50 focus:bg-white"
+                className="w-full px-5 py-4 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition-all bg-gray-50 focus:bg-white"
               />
             </div>
             <div>
@@ -468,7 +466,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="button"
-                    className={`p-4 text-left rounded-xl text-sm font-medium border-2 transition-all ${
+                    className={`p-5 text-left rounded-xl text-base font-medium border-2 transition-all ${
                       formData.preferredFields.includes(field)
                         ? "bg-gradient-to-r from-pink-500 to-red-500 text-white border-pink-500 shadow-lg"
                         : "hover:bg-pink-50 hover:border-pink-300 text-gray-700 border-gray-200 bg-white hover:shadow-md"
@@ -492,7 +490,8 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4">
+    <div className="max-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-6 px-2 h-screen overflow-y-auto">
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -591,7 +590,9 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100">
+
+            {/* PI */}
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 ">
               <div className="text-center pb-8 pt-10 px-8">
                 <div
                   className={`w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-r ${steps[currentStep].color} shadow-lg`}
@@ -618,7 +619,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                     whileTap={{ scale: 0.95 }}
                     onClick={handleBack}
                     disabled={currentStep === 0}
-                    className="flex items-center px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-sm disabled:shadow-none"
+                    className="flex items-center px-10 py-5 text-base border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-sm disabled:shadow-none"
                   >
                     <ArrowLeft className="w-5 h-5 mr-2" />
                     Back
@@ -629,7 +630,7 @@ const OnboardingFlow = ({ onComplete, onClose }) => {
                     whileTap={{ scale: 0.95 }}
                     onClick={handleNext}
                     disabled={!isStepValid()}
-                    className={`flex items-center px-8 py-4 bg-gradient-to-r ${steps[currentStep].color} text-white rounded-xl hover:shadow-lg transition-all font-medium shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-sm`}
+                    className={`flex items-center px-10 py-5 text-base bg-gradient-to-r ${steps[currentStep].color} text-white rounded-xl hover:shadow-lg transition-all font-medium shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-sm`}
                   >
                     {currentStep === steps.length - 1 ? (
                       <>
