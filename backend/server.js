@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
-const morgan = require('morgan');
 const path = require('path');
 const fs = require('fs'); // Add this import
 const fsPromises = require('fs').promises; // Add this import
@@ -28,7 +27,6 @@ const { authenticateToken } = require('./middleware/auth'); // Adjust path as ne
 const app = express();
 
 app.use(compression());
-app.use(morgan('combined'));
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors({
@@ -43,6 +41,19 @@ const limiter = rateLimit({
   message: { error: 'Too many requests, please try again later.' }
 });
 app.use(limiter);
+
+// custom Logging middleware
+app.use((req, res, next) => {
+  const start = process.hrtime();
+  res.on('finish', () => {
+    const end = process.hrtime(start);
+    const duration = (end[0] * 1000 + end[1] / 1e6).toFixed(2);
+    const logMessage = `${req.method} ${req.originalUrl} - Status: ${res.statusCode} - Response Time: ${duration}ms`;
+    console.log(logMessage);
+  });
+
+  next();
+});
 
 // Serve static files
 app.use('/reports', express.static(path.join(__dirname, 'reports')));
