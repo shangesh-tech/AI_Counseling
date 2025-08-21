@@ -28,7 +28,7 @@ const sendChatMessage = async () => {
     const token = localStorage.getItem('token');
     console.log('Sending chat request with reportId:', selectedReport.id);
     
-    const response = await axios.post('http://localhost:5000/chat', 
+    const response = await axios.post('https://ai-counseling-9ybe.onrender.com/chat', 
       {
         reportId: selectedReport.id,
         message: currentMessage
@@ -182,7 +182,7 @@ const Dashboard = () => {
         return;
       }
 
-      const { data } = await axios.get('http://localhost:5000/reports', {
+      const { data } = await axios.get('https://ai-counseling-9ybe.onrender.com/reports', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -213,7 +213,7 @@ const Dashboard = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/reports/${reportId}`, {
+      await axios.delete(`https://ai-counseling-9ybe.onrender.com/reports/${reportId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -239,7 +239,7 @@ const Dashboard = () => {
 
     const fullUrl = reportUrl.startsWith('http') 
       ? reportUrl 
-      : `http://localhost:5000/${reportUrl}`;
+      : `https://ai-counseling-9ybe.onrender.com/${reportUrl}`;
       
     const link = document.createElement('a');
     link.href = fullUrl;

@@ -22,7 +22,7 @@ export default function Login() {
     setError('');
     
     try {
-      const { data } = await axios.post('http://localhost:5000/auth/signin', formData);
+      const { data } = await axios.post('https://ai-counseling-9ybe.onrender.com/auth/signin', formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       navigate('/dashboard');
