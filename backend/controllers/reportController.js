@@ -7,7 +7,6 @@ const { Groq } = require('groq-sdk');
 const path = require('path');
 
 
-// Initialize Groq SDK (make sure this is in your main server file)
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // Tool definition for Groq
@@ -87,7 +86,6 @@ function parseInlineMarkdown(text) {
   return text;
 }
 
-// Enhanced Generate Report Analysis
 const generateAnalysis = async (req, res) => {
   const { 
     name, age, grade, school, location, skills, interests, 
@@ -203,7 +201,7 @@ const generateAnalysis = async (req, res) => {
     const fileName = `report_${req.user._id}_${Date.now()}.pdf`;
     const filePath = path.join(reportsDir, fileName);
 
-    // Generate PDF with enhanced formatting
+    // Generate PDF with formatting
     const doc = new PDFDocument({ margin: 50 });
     const writeStream = require('fs').createWriteStream(filePath);
 
@@ -328,7 +326,7 @@ const generateAnalysis = async (req, res) => {
   } catch (error) {
     console.error('Enhanced analysis error:', error);
     
-    // Save failed report record
+    
     try {
       const failedReport = new Report({
         userId: req.user._id,
